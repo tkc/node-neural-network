@@ -1,6 +1,6 @@
 # node-neural-network
-node-neural-network
 
+Built with only pure typescript.
 
 ### Run
 ```
