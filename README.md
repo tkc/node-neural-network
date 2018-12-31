@@ -26,3 +26,6 @@ acc_1:0 losss_1:0.5058577124740012 acc_2:0 loss_2:0.506273441101275
 acc_1:0 losss_1:0.5052658394501399 acc_2:0 loss_2:0.5056316568406227
 bias1:0.02030044914335116 bias2:0.11777236857193832
 ```
+
+### Iris CSV Data
+https://github.com/tkc/node-neural-network/blob/master/asset/iris.ts
