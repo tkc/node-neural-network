@@ -1,0 +1,52 @@
+{
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.14.1",
+    "@tensorflow/tfjs-node": "^0.2.1",
+    "@types/jest": "^23.3.10",
+    "@types/mathjs": "^4.4.4",
+    "@types/node": "^10.12.12",
+    "@types/numjs": "^0.14.4",
+    "@types/uuid": "^3.4.4",
+    "jest": "^23.6.0",
+    "mathjs": "^5.4.0",
+    "mecab-async": "^0.1.2",
+    "numjs": "^0.16.0",
+    "ts-jest": "^23.10.5",
+    "uuid": "^3.3.2"
+  },
+  "name": "app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {
+    "typescript": "^3.2.2"
+  },
+  "scripts": {
+    "build": "tsc --outDir ./build",
+    "watch": "tsc --watch",
+    "tsc": "tsc -p tsconfig.json",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.spec.json"
+      }
+    },
+    "testMatch": [
+      "**/?(*.)+(spec|test).ts?(x)"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+node_modules/
+build/
+.DS_Store
+src/*.js
+*.d.ts
+public/*.js
+tools/swagger2def/.yaml
+storybook-static
+yarn-error.log
+.idea/
+__screenshots__/.reg
+.reg
+__screenshots__
+.node-version

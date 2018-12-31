@@ -1,0 +1,22 @@
+version: 1
+rules:
+  - expected: デフォルト
+    patterns: ディフォルト
+  - expected: 、
+    patterns: ，
+  - expected: 禁止用語が使われています。 
+    patterns: 
+      - 禁止用語
+  - expected: ベンダー
+    pattern: /ベンダ(?!ー)/
+    specs:
+      - from: ベンダ
+        to: ベンダー
+      - from: ベンダー
+        to: ベンダー 
+  - expected: （$1）
+    pattern:  /\(([^)]+)\)/
+    specs:
+      - from: (そのとおり)
+        to:   （そのとおり）       
+        
