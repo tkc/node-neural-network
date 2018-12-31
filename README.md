@@ -2,6 +2,9 @@
 
 Built with only pure typescript.
 
+### Python Sample
+https://colab.research.google.com/drive/134PzsZr90KIjFaUIzjjaCFWpCdtYUDO5
+
 ### Run
 ```
 ts-node app.ts
