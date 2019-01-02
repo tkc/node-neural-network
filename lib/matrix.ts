@@ -1,88 +1,115 @@
-export function expM2(matrix: number[][]): number[][] {
-  return matrix.map(m1 => m1.map(m2 => Math.exp(m2)));
-}
+import * as Models from "../models";
+import * as Vector from "./vactor";
 
-export function MultiplyM1M1(matrix1: number[], matrix2: number[]): number[] {
-  if (matrix1.length === matrix2.length) {
-    return matrix1.map((m, i) => matrix1[i] * matrix2[i]);
-  } else {
-    if (matrix1.length < matrix2.length) {
-      return matrix2.map((m, i) => matrix1[0] * matrix2[i]);
-    } else {
-      return matrix1.map((m, i) => matrix1[i] * matrix2[0]);
-    }
+export function CreateMatrix(v: number[][]): Models.Matrix {
+  let matrixsInstance: number[][];
+  matrixsInstance = v;
+
+  function val(): number[][] {
+    return matrixsInstance;
   }
-}
 
-export function MultiplyM2M1(matrix1: number[][], matrix2: number[]): number[][] {
-  const res = [];
-  matrix1.forEach((m, i) => {
-    m.forEach((m2, k) => res.push(matrix2.map(m2 => m2 * matrix1[i][k])));
-  });
-  return res;
-}
-
-export function MultiplyScalarM1(scalar: number, matrix2: number[]): number[] {
-  return matrix2.map(m => m * scalar);
-}
-
-export function SumScalarM2(scalar: number, matrix2: number[][]): number[][] {
-  return matrix2.map(m2 => m2.map((m3, i) => m3 + scalar));
-}
-
-export function SumM1(matrix: number[]): number {
-  return matrix.reduce((p, c) => p + c);
-}
-
-export function SumM2(matrix: number[][]): number {
-  return matrix.map(m => m.reduce((p, c) => p + c)).reduce((p, c) => p + c);
-}
-
-export function SumAxis0M2(matrix: number[][]): number[] {
-  return matrix.map(m => m.reduce((p, c) => p + c));
-}
-
-export function DotDivideM2Scalar(matrix2: number[], scalar: number): number[] {
-  return matrix2.map(m2 => m2 / scalar);
-}
-
-export function DotDivideScalarM1(scalar: number, matrix: number[]): number[] {
-  return matrix.map(m => scalar / m);
-}
-
-export function SquareM1(matrix: number[]): number[] {
-  return matrix.map((m, i) => matrix[i] * matrix[i]);
-}
-
-export function SubtractM2Scalar(matrix1: number[][], scalar: number): number[][] {
-  return matrix1.map(m1 => m1.map((m2, i) => m2 - scalar));
-}
-
-export function SubtractM1Scalar(matrix1: number[], scalar: number): number[] {
-  return matrix1.map(m => m - scalar);
-}
-
-export function SubtracScalarM1(scalar: number, matrix1: number[]): number[] {
-  return matrix1.map(m => scalar - m);
-}
-
-export function SubtractM1M1(matrix1: number[], matrix2: number[]): number[] {
-  if (matrix1.length === matrix2.length) {
-    return matrix1.map((m, i) => matrix1[i] - matrix2[i]);
-  } else {
-    if (matrix1.length < matrix2.length) {
-      return matrix2.map((m, i) => matrix1[0] - matrix2[i]);
-    } else {
-      return matrix1.map((m, i) => matrix1[i] - matrix2[0]);
+  function row(i: number): Models.Vector {
+    if (i < 0 || i >= matrixsInstance.length) {
+      return Vector.CreateVector([0]);
     }
+    return Vector.CreateVector(matrixsInstance[i]);
   }
-}
 
-export function DotscalarM2(scalar: number, matrix2: number[][]): number[][] {
-  return matrix2.map(m2 => m2.map((m3, i) => m3 * scalar));
-}
+  function column(j: number): Models.Vector {
+    if (j < 0 || j >= matrixsInstance[0].length) {
+      return Vector.CreateVector([0]);
+    }
+    const result = [];
+    for (let i = 0; i < matrixsInstance.length; i += 1) {
+      result.push(matrixsInstance[i][j]);
+    }
+    return Vector.CreateVector(result);
+  }
 
-export function DotM2M1(matrix1: number[][], matrix2: number[]): number[] {
-  const res = matrix1.map(m1 => m1.map((m2, i) => m2 * matrix2[i]));
-  return res.map(m1 => m1.reduce((p, c) => p + c));
+  function log(): Models.Matrix {
+    const res = matrixsInstance.map((x, i) => x.map((y, k) => Math.log(y)));
+    return CreateMatrix(res);
+  }
+
+  function add(matrix: number | Models.Matrix): Models.Matrix {
+    if (typeof matrix === "number") {
+      const res = matrixsInstance.map((x: number[]) => x.map(y => (y + matrix) as number));
+      return CreateMatrix(res);
+    }
+
+    if (!isSameSize(matrix)) {
+      throw new Error("Cannot operate two matrix with different dimensions.");
+    }
+
+    const val: number[][] = matrix.val();
+    const res = matrixsInstance.map((x, i) => x.map((y, k) => y + val[i][k]));
+    return CreateMatrix(res);
+  }
+
+  function subtract(matrix: number | Models.Matrix): Models.Matrix {
+    if (typeof matrix === "number") {
+      const res = matrixsInstance.map((x: number[]) => x.map(y => (y - matrix) as number));
+      return CreateMatrix(res);
+    }
+
+    if (!isSameSize(matrix)) {
+      throw new Error("Cannot operate two matrix with different dimensions.");
+    }
+
+    const val: number[][] = matrix.val();
+    const res = matrixsInstance.map((x, i) => x.map((y, k) => y - val[i][k]));
+    return CreateMatrix(res);
+  }
+
+  function isSameSize(matrix: Models.Matrix): boolean {
+    const val: number[][] = matrix.val();
+    return matrixsInstance.length === val.length && matrixsInstance[0].length === val[0].length;
+  }
+
+  function multiply(matrix: number | Models.Matrix): Models.Matrix {
+    if (typeof matrix === "number") {
+      const result = CreateMatrix(matrixsInstance).val();
+      for (let i = 0, li = result.length; i < li; i += 1) {
+        for (let j = 0, lj = result[0].length; j < lj; j += 1) {
+          result[i][j] *= matrix as number;
+        }
+      }
+      return CreateMatrix(matrixsInstance);
+    }
+
+    let inputElements: number[][] = matrix.val();
+    if (matrixsInstance[0].length !== inputElements.length) {
+      throw new Error("Number of rows of A should match number of cols of B.");
+    }
+
+    const li = matrixsInstance.length;
+    const lj = inputElements[0].length;
+    const lk = matrixsInstance[0].length - 1;
+    const result = [];
+    for (let i = 0; i < li; i += 1) {
+      const currentRow = [];
+      for (let j = 0; j < lj; j += 1) {
+        let sum = 0;
+        for (let k = lk; k >= 0; k -= 1) {
+          sum += matrixsInstance[i][k] * inputElements[k][j];
+        }
+        currentRow[j] = sum;
+      }
+      result[i] = currentRow;
+    }
+
+    return CreateMatrix(result);
+  }
+
+  return {
+    val,
+    multiply,
+    isSameSize,
+    subtract,
+    row,
+    column,
+    log,
+    add,
+  };
 }
