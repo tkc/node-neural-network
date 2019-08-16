@@ -1,0 +1,36 @@
+version: 2:
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.14.0-browsers
+        user: root
+    working_directory: ~/app
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run:
+          name: Update NPM
+          command: |
+            sudo npm install -g npm
+            curl -0 -L http://npmjs.org/install.sh | sudo sh
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Update packages
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y wget --no-install-recommends                                
+      - run:
+          name: Tsc
+          command: yarn tsc
+      - run:
+          name: Test
+          command: yarn test
