@@ -30,11 +30,7 @@ for (let count = 0; count < 15; count++) {
   const loss1 = nn.Loss(XTrain, YTrain, weights1, bias1);
   const acc2 = nn.Accuracy(XTest, YTest, weights2, bias2);
   const loss2 = nn.Loss(XTest, YTest, weights2, bias2);
-
   console.log(`acc_1:${acc1} losss_1:${loss1} acc_2:${acc2} loss_2:${loss2}`);
 }
-
-// console.log(weights1);
-// console.log(weights2);
 
 console.log(`bias1:${bias1} bias2:${bias2}`);
