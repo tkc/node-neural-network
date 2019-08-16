@@ -42,7 +42,7 @@ test("Loss", () => {
 
 test("Accuracy", () => {
   const x = [[1, 1, 1, 1]];
-  const y = [[1, 1, 1, 1]];
+  const y = [1, 1, 1, 1];
   const w = [0.1, 0.1, 0.1, 0.1];
   const b = 0.1;
   const res = nn.Accuracy(x, y, w, b);

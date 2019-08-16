@@ -12,6 +12,7 @@ const YTrain: number[] = Y.filter((i, index) => index < 40 || (index >= 50 && in
 const YTest: number[] = Y.filter((i, index) => (index >= 40 && index < 50) || (index >= 90 && index < 100));
 
 const eta = 0.1;
+
 let weights1 = [0.1, 0.1, 0.1, 0.1];
 let bias1 = 0.1;
 let weights2 = [0.1, 0.1, 0.1, 0.1];
