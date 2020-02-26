@@ -13,10 +13,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: dependency
+      - name: Dependency
         run: yarn
-      - name: Tsc
-        run: npm run tsc 
+      - name: TSC
+        run: yarn tsc 
       - name: Test
         run: yarn test    
         env:
