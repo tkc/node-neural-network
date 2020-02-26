@@ -1,0 +1,11 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.17.0-browsers
+        user: root
+    working_directory: ~/eirl_repo
+    steps:
+       - checkout
+       - run: node -v
