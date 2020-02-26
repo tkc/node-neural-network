@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: dependency
-        run: npm install
+        run: yarn
       - name: Tsc
         run: npm run tsc 
       - name: Test
