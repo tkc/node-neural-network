@@ -1,4 +1,4 @@
-import * as matrx from "./matrix";
+import * as matrx from "./math";
 
 export interface UpdateResult {
   w: number[];

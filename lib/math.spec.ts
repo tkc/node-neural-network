@@ -1,4 +1,4 @@
-import * as matrx from "./matrix";
+import * as matrx from "./math";
 
 test("Dot", () => {
   const a = [[1, 1, 1, 1]];
